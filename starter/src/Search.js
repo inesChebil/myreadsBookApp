@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import "./App.css";
 import Book from "./Book";
 
-const Search = ({ books }) => {
-  console.log({ books: books });
+const Search = ({ books, updateBook }) => {
   const [search, setSearch] = useState("");
   const listBooks = books
     .filter(
       (book) =>
         book.title.toLowerCase().includes(search.toLowerCase()) ||
-        book.authors.toString().toLowerCase().includes(search.toLowerCase()) ||
+        book.authors
+          .toString()
+          .toLowerCase()
+          .includes(search.toLowerCase()) ||
         JSON.stringify(book.industryIdentifiers)
           .toLowerCase()
           .includes(search.toLowerCase())
@@ -24,6 +26,7 @@ const Search = ({ books }) => {
           title={book.title}
           authors={book.authors}
           shelf={book.shelf}
+          updateBook={updateBook}
         />
       );
     });

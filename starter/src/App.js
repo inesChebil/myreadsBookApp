@@ -8,20 +8,35 @@ import * as BooksAPI from "./BooksAPI";
 function App() {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    const getBooks = async () => {
-      const res = await BooksAPI.getAll();
+  const getBooks = async () => {
+    const res = await BooksAPI.getAll();
 
-      setBooks(res);
-    };
+    setBooks(res);
+  };
+
+  const updateBook = async (book, selectedShelf) => {
+    const res = await BooksAPI.update(book, selectedShelf);
+  };
+  useEffect(() => {
     getBooks();
-  }, []);
+    return () => {
+      console.log("getBooks");
+    };
+  }, [books, getBooks]);
 
   return (
     <div className="app">
       <Routes>
-        <Route exact path="/" element={<Home books={books} />} />
-        <Route exact path="/search" element={<Search books={books} />} />
+        <Route
+          exact
+          path="/"
+          element={<Home books={books} updateBook={updateBook} />}
+        />
+        <Route
+          exact
+          path="/search"
+          element={<Search books={books} updateBook={updateBook} />}
+        />
       </Routes>
     </div>
   );

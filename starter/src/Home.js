@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import "./App.css";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Book from "./Book";
+import PropTypes from "prop-types";
 
-const Home = () => {
-  const [shelfs, setShelfs] = useState([
-    "Currently Reading",
-    "Want to read",
-    "read",
-  ]);
+import { options } from "./BookShelfChanger";
+
+import * as BooksAPI from "./BooksAPI";
+const Home = ({ books, updateBook }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -15,16 +15,28 @@ const Home = () => {
       </div>
       <div className="list-books-content">
         <div>
-          {shelfs.map((shelf, id) => {
+          {options.map((option) => {
             return (
-              <div className="bookshelf" key={id}>
-                <h2 className="bookshelf-title">{shelf}</h2>
+              <div className="bookshelf" key={option.value}>
+                <h2 className="bookshelf-title">{option.label}</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    <li>
-                      {/* <Book /> */}
-                      books
-                    </li>
+                    {books
+                      .filter((book) => book.shelf === option.value)
+                      .map((book) => {
+                        return (
+                          <Book
+                            key={book.id}
+                            book={book}
+                            backgroundImage={book.imageLinks.thumbnail}
+                            title={book.title}
+                            authors={book.authors}
+                            shelf={book.shelf}
+                            updateBook={updateBook}
+                          />
+                        );
+                      })}
+
                     {/* <li>
                       <Book />
                     </li> */}

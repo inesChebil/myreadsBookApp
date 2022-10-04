@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import BookShelfChanger from "./BookShelfChanger";
-const Book = ({ backgroundImage, title, authors, shelf, book }) => {
+const Book = ({ backgroundImage, title, authors, shelf, book, updateBook }) => {
   return (
     <div className="book">
       <div className="book-top">
@@ -13,7 +13,7 @@ const Book = ({ backgroundImage, title, authors, shelf, book }) => {
             backgroundImage: `url(${backgroundImage})`,
           }}
         ></div>
-        <BookShelfChanger shelf={shelf} book={book} />
+        <BookShelfChanger shelf={shelf} book={book} updateBook={updateBook} />
       </div>
       <div className="book-title">{title}</div>
       <div className="book-authors">{authors.toString()}</div>
