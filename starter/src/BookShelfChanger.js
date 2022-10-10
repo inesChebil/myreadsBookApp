@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import PropTypes from "prop-types";
 
 export const options = [
   { value: "currentlyReading", label: "Currently Reading" },
@@ -9,21 +10,26 @@ export const options = [
 
 const BookShelfChanger = ({ shelf, book, updateBook }) => {
   const [selectedShelf, setSelectedShelf] = useState(shelf);
+  const [initialState, setInitialState] = useState(false);
 
   const changeHandler = (e) => {
-    console.log(e.target.value);
+    console.log(shelf);
+    setInitialState(true);
     setSelectedShelf(e.target.value);
   };
   useEffect(() => {
-    updateBook(book, selectedShelf);
-    setSelectedShelf(selectedShelf);
-    console.log("loool");
-    console.log(selectedShelf);
-  }, [selectedShelf]);
+    if (initialState) {
+      updateBook(book, selectedShelf);
+      setSelectedShelf(selectedShelf);
+    }
+  }, [selectedShelf, initialState]);
 
   return (
     <div className="book-shelf-changer">
-      <select value={selectedShelf} onChange={changeHandler}>
+      <select
+        value={selectedShelf ? selectedShelf : "none"}
+        onChange={changeHandler}
+      >
         <option value="none" disabled>
           Move to...
         </option>
@@ -37,4 +43,9 @@ const BookShelfChanger = ({ shelf, book, updateBook }) => {
   );
 };
 
+BookShelfChanger.propTypes = {
+  shelf: PropTypes.string,
+  book: PropTypes.object.isRequired,
+  updateBook: PropTypes.func.isRequired,
+};
 export default BookShelfChanger;

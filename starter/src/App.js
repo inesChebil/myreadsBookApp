@@ -16,14 +16,11 @@ function App() {
   };
 
   const updateBook = async (book, selectedShelf) => {
-    const res = await BooksAPI.update(book, selectedShelf);
+    await BooksAPI.update(book, selectedShelf);
   };
   useEffect(() => {
     getBooks();
-    return () => {
-      console.log(books);
-    };
-  }, [books, getBooks]);
+  }, [books]);
 
   return (
     <div className="app">

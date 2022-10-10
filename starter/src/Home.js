@@ -1,12 +1,11 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Book from "./Book";
 import PropTypes from "prop-types";
 
 import { options } from "./BookShelfChanger";
 
-import * as BooksAPI from "./BooksAPI";
 const Home = ({ books, updateBook }) => {
   return (
     <div className="list-books">
@@ -28,7 +27,11 @@ const Home = ({ books, updateBook }) => {
                           <Book
                             key={book.id}
                             book={book}
-                            backgroundImage={book.imageLinks.thumbnail}
+                            backgroundImage={
+                              book.imageLinks.thumbnail
+                                ? book.imageLinks.thumbnail
+                                : null
+                            }
                             title={book.title}
                             authors={book.authors}
                             shelf={book.shelf}
@@ -54,4 +57,8 @@ const Home = ({ books, updateBook }) => {
   );
 };
 
+Home.propTypes = {
+  books: PropTypes.array.isRequired,
+  updateBook: PropTypes.func.isRequired,
+};
 export default Home;
