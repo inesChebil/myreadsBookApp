@@ -14,40 +14,42 @@ const Home = ({ books, updateBook }) => {
       </div>
       <div className="list-books-content">
         <div>
-          {options.map((option) => {
-            return (
-              <div className="bookshelf" key={option.value}>
-                <h2 className="bookshelf-title">{option.label}</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {books
-                      .filter((book) => book.shelf === option.value)
-                      .map((book) => {
-                        return (
-                          <Book
-                            key={book.id}
-                            book={book}
-                            backgroundImage={
-                              book.imageLinks.thumbnail
-                                ? book.imageLinks.thumbnail
-                                : null
-                            }
-                            title={book.title}
-                            authors={book.authors}
-                            shelf={book.shelf}
-                            updateBook={updateBook}
-                          />
-                        );
-                      })}
+          {options
+            .filter((op) => op.value !== "none")
+            .map((option) => {
+              return (
+                <div className="bookshelf" key={option.value}>
+                  <h2 className="bookshelf-title">{option.label}</h2>
+                  <div className="bookshelf-books">
+                    <ol className="books-grid">
+                      {books
+                        .filter((book) => book.shelf === option.value)
+                        .map((book) => {
+                          return (
+                            <Book
+                              key={book.id}
+                              book={book}
+                              backgroundImage={
+                                book.imageLinks.thumbnail
+                                  ? book.imageLinks.thumbnail
+                                  : null
+                              }
+                              title={book.title}
+                              authors={book.authors}
+                              shelf={book.shelf}
+                              updateBook={updateBook}
+                            />
+                          );
+                        })}
 
-                    {/* <li>
+                      {/* <li>
                       <Book />
                     </li> */}
-                  </ol>
+                    </ol>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
       <div className="open-search">
