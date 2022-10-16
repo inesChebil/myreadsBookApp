@@ -3,6 +3,7 @@ import "./App.css";
 import PropTypes from "prop-types";
 
 export const options = [
+  { value: "none", label: "none " },
   { value: "currentlyReading", label: "Currently Reading" },
   { value: "wantToRead", label: "Want to read" },
   { value: "read", label: "Read" },
@@ -26,10 +27,7 @@ const BookShelfChanger = ({ shelf, book, updateBook }) => {
 
   return (
     <div className="book-shelf-changer">
-      <select
-        value={selectedShelf ? selectedShelf : "none"}
-        onChange={changeHandler}
-      >
+      <select value={selectedShelf} onChange={changeHandler}>
         <option value="none" disabled>
           Move to...
         </option>
